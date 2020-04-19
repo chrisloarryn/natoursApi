@@ -11,11 +11,11 @@ module.exports = class Email {
   }
 
   newTransport () {
-    if (process.env.NODE_ENV.trim() === 'production') {
+    if (process.env.NODE_ENV === 'production') {
       // Sendgrid
 
       return nodemailer.createTransport({
-        service: 'SendGrid',
+        service: "SendGrid",
         // host: process.env.SENDGRID_HOST,
         // port: process.env.SENDGRID_PORT,
         auth: {

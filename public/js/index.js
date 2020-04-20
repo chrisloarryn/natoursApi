@@ -4,6 +4,7 @@ import { displayMap } from './mapbox'
 import { login, logout } from './login'
 import { updateSettings } from './updateSettings'
 import { bookTour } from './stripe'
+import { showAlert } from './alerts'
 
 // DOM ELEMENTS
 const mapBox = document.getElementById('map')
@@ -36,7 +37,7 @@ if (userDataForm)
     form.append('name', document.getElementById('name').value)
     form.append('email', document.getElementById('email').value)
     form.append('photo', document.getElementById('photo').files[0])
-    
+
     updateSettings(form, 'data')
   })
 
@@ -66,3 +67,6 @@ if (bookBtn) {
     bookTour(tourId)
   })
 }
+
+const alertMessage = document.querySelector('body').dataset - alertMessage
+if (alertMessage) showAlert('success', alertMessage, 20)

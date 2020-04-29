@@ -14,6 +14,7 @@ const logOutBtn = document.querySelector('.nav__el--logout')
 const userDataForm = document.querySelector('.form-user-data')
 const userPasswordForm = document.querySelector('.form-user-password')
 const bookBtn = document.getElementById('book-tour')
+const signUpBtn = document.getElementById('signUpButton')
 
 // DELEGATION
 if (mapBox) {
@@ -37,6 +38,14 @@ if (signUpForm)
     const password = document.getElementById('password').value
     const passwordConfirm = document.getElementById('passwordConfirm').value
     signup(name, email, password, passwordConfirm)
+  })
+
+if (signUpForm && signUpBtn)
+  signUpBtn.addEventListener('click', e => {
+    e.target.textContent = 'Processing...'
+    setTimeout(() => {
+      e.target.textContent = 'Sign up'
+    }, 1500)
   })
 
 if (logOutBtn) logOutBtn.addEventListener('click', logout)

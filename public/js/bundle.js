@@ -8419,7 +8419,7 @@ exports.showAlert = showAlert;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.logout = exports.signup = exports.login = void 0;
+exports.logout = exports.login = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -8482,8 +8482,8 @@ var login = /*#__PURE__*/function () {
 
 exports.login = login;
 
-var signup = /*#__PURE__*/function () {
-  var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(name, email, password, passwordConfirm) {
+var logout = /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
     var res;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
@@ -8492,35 +8492,23 @@ var signup = /*#__PURE__*/function () {
             _context2.prev = 0;
             _context2.next = 3;
             return (0, _axios.default)({
-              method: 'POST',
-              url: '/api/v1/users/signup',
-              data: {
-                name: name,
-                email: email,
-                password: password,
-                passwordConfirm: passwordConfirm
-              }
+              method: 'GET',
+              url: '/api/v1/users/logout'
             });
 
           case 3:
             res = _context2.sent;
-
-            if (res.data.status === 'success') {
-              (0, _alerts.showAlert)('success', 'SignUp successfully!');
-              window.setTimeout(function () {
-                location.assign('/');
-              }, 1500);
-            }
-
-            _context2.next = 10;
+            if (res.data.status = 'success') location.reload(true);
+            _context2.next = 11;
             break;
 
           case 7:
             _context2.prev = 7;
             _context2.t0 = _context2["catch"](0);
-            (0, _alerts.showAlert)('error', _context2.t0.response.data.message);
+            console.log(_context2.t0.response);
+            (0, _alerts.showAlert)('error', 'Error logging out! Try again.');
 
-          case 10:
+          case 11:
           case "end":
             return _context2.stop();
         }
@@ -8528,49 +8516,8 @@ var signup = /*#__PURE__*/function () {
     }, _callee2, null, [[0, 7]]);
   }));
 
-  return function signup(_x3, _x4, _x5, _x6) {
-    return _ref2.apply(this, arguments);
-  };
-}();
-
-exports.signup = signup;
-
-var logout = /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-    var res;
-    return regeneratorRuntime.wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
-            _context3.prev = 0;
-            _context3.next = 3;
-            return (0, _axios.default)({
-              method: 'GET',
-              url: '/api/v1/users/logout'
-            });
-
-          case 3:
-            res = _context3.sent;
-            if (res.data.status = 'success') location.reload(true);
-            _context3.next = 11;
-            break;
-
-          case 7:
-            _context3.prev = 7;
-            _context3.t0 = _context3["catch"](0);
-            console.log(_context3.t0.response);
-            (0, _alerts.showAlert)('error', 'Error logging out! Try again.');
-
-          case 11:
-          case "end":
-            return _context3.stop();
-        }
-      }
-    }, _callee3, null, [[0, 7]]);
-  }));
-
   return function logout() {
-    return _ref3.apply(this, arguments);
+    return _ref2.apply(this, arguments);
   };
 }();
 
@@ -8977,12 +8924,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 // DOM ELEMENTS
 var mapBox = document.getElementById('map');
 var loginForm = document.querySelector('.form--login');
-var signUpForm = document.querySelector('.form--signup');
 var logOutBtn = document.querySelector('.nav__el--logout');
 var userDataForm = document.querySelector('.form-user-data');
 var userPasswordForm = document.querySelector('.form-user-password');
-var bookBtn = document.getElementById('book-tour');
-var signUpBtn = document.getElementById('signUpButton'); // DELEGATION
+var bookBtn = document.getElementById('book-tour'); // DELEGATION
 
 if (mapBox) {
   var locations = JSON.parse(mapBox.dataset.locations);
@@ -8994,20 +8939,6 @@ if (loginForm) loginForm.addEventListener('submit', function (e) {
   var email = document.getElementById('email').value;
   var password = document.getElementById('password').value;
   (0, _login.login)(email, password);
-});
-if (signUpForm) signUpForm.addEventListener('submit', function (e) {
-  e.preventDefault();
-  var name = document.getElementById('name').value;
-  var email = document.getElementById('email').value;
-  var password = document.getElementById('password').value;
-  var passwordConfirm = document.getElementById('passwordConfirm').value;
-  (0, _login.signup)(name, email, password, passwordConfirm);
-});
-if (signUpForm && signUpBtn) signUpBtn.addEventListener('click', function (e) {
-  e.target.textContent = 'Processing...';
-  setTimeout(function () {
-    e.target.textContent = 'Sign up';
-  }, 1500);
 });
 if (logOutBtn) logOutBtn.addEventListener('click', _login.logout);
 if (userDataForm) userDataForm.addEventListener('submit', function (e) {

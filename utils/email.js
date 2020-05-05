@@ -11,12 +11,12 @@ module.exports = class Email {
   }
 
   newTransport () {
-    if (process.env.NODE_ENV === 'productions') {
+    if (process.env.NODE_ENV === 'development') {
       // SendGrid for sending emails
       return nodemailer.createTransport({
-        service: 'SendGrid',
-        //host: process.env.SENDGRID_HOST,
-        //port: process.env.SENDGRID_PORT,
+        // service: 'SendGrid',
+        host: process.env.SENDGRID_HOST,
+        port: process.env.SENDGRID_PORT,
         // secure: false,
         auth: {
           user: process.env.SENDGRID_USERNAME,
@@ -66,5 +66,6 @@ module.exports = class Email {
       'passwordReset',
       'Your password reset token (valid for only 10 minutes)'
     )
+    
   }
 }

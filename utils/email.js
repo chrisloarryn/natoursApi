@@ -1,28 +1,27 @@
 const nodemailer = require('nodemailer')
+const nodemailerSendgrid = require('nodemailer-sendgrid')
 const pug = require('pug')
 const htmlToText = require('html-to-text')
 
 module.exports = class Email {
-  constructor (user, url) {
+  constructor(user, url) {
     this.to = user.email
     this.firstName = user.name.split(' ')[0]
     this.url = url
     this.from = `Cristobal Contreras <${process.env.EMAIL_FROM}>`
   }
 
-  newTransport () {
+  newTransport = () => {
     if (process.env.NODE_ENV === 'development') {
-      // SendGrid for sending emails
+      // Sendgrid
+
       return nodemailer.createTransport({
-        // service: 'SendGrid',
-        host: process.env.SENDGRID_HOST,
-        port: process.env.SENDGRID_PORT,
-        // secure: false,
+        service: 'SendGrid',
         auth: {
           user: process.env.SENDGRID_USERNAME,
-          pass: process.env.SENDGRID_PASSWORD
+          pass: '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' || process.env.SENDGRID_PASSWORD
         }
-      })
+      });
     }
 
     return nodemailer.createTransport({
@@ -36,7 +35,7 @@ module.exports = class Email {
   }
 
   // Send the actual email
-  async send (template, subject) {
+  async send(template, subject) {
     // 1) Render HTML based on a pug template
     const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
       firstName: this.firstName,
@@ -57,15 +56,15 @@ module.exports = class Email {
     await this.newTransport().sendMail(mailOptions)
   }
 
-  async sendWelcome () {
+  async sendWelcome() {
     await this.send('welcome', 'Welcome to the Natours Family!')
   }
 
-  async sendPasswordReset () {
+  async sendPasswordReset() {
     await this.send(
       'passwordReset',
       'Your password reset token (valid for only 10 minutes)'
     )
-    
+
   }
 }

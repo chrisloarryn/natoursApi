@@ -1,7 +1,8 @@
 FROM node:12
-WORKDIR /Users/air/DEV/app
-COPY package.json /Users/air/DEV/app
+## WORKDIR /Users/air/DEV/app
+WORKDIR /usr/src/app
+COPY package.json /usr/src/app
 RUN npm install
-COPY . /Users/air/DEV/app/
+COPY . /usr/src/app
 EXPOSE 3000
 CMD ["npm", "start"]

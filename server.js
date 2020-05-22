@@ -19,7 +19,7 @@ const DB = process.env.DATABASE.replace(
 
 // DB || process.env.DATABASE_LOCAL
 mongoose
-  .connect('mongodb://mongo:27017/docker-node-mongo', {
+  .connect(DB, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,

@@ -11,12 +11,17 @@ pipeline {
     stages {
         stage('Dependencies') {
             steps {
-                sh 'sudo npm install'
+                sh 'npm install'
+            }
+        }
+        stage("first"){
+            steps {
+                sh 'npm rebuild --verbose sharp'
             }
         }
         stage("Start") {
             steps {
-                sh 'npm start'
+                sh 'npm run start:dev'
             }
         }
 

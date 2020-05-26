@@ -9,12 +9,12 @@ pipeline {
             CI = 'true'
         }
     stages {
-        stage('Build') {
+        stage('Dependencies') {
             steps {
                 sh 'npm install'
             }
         }
-        stage("start") {
+        stage("Start") {
             steps {
                 sh 'npm start'
             }

@@ -1,26 +1,15 @@
 pipeline {
-
-  agent any
-  
-  stages {
-  
-    stage("build") {
-      steps {
-        sh 'docker-compose up'
-      }
+    agent {
+        docker {
+            image 'node:6-alpine' 
+            args '-p 3000:3000' 
+        }
     }
-  
-    stage("test") {
-      steps {
-        echo 'testing the application'
-      }
+    stages {
+        stage('Build') { 
+            steps {
+                sh 'npm install' 
+            }
+        }
     }
-  
-    stage("deploy") {
-      steps {
-        echo 'deploying the application'
-      }
-    }
-  
-  }
 }

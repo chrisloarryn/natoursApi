@@ -16,7 +16,7 @@ pipeline {
         }
         stage("Start") {
             steps {
-                sh 'docker-compose up'
+                sh 'npm start'
             }
         }
 

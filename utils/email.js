@@ -19,7 +19,7 @@ module.exports = class Email {
         service: 'SendGrid',
         auth: {
           user: process.env.SENDGRID_USERNAME,
-          pass: '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' || process.env.SENDGRID_PASSWORD
+          pass: process.env.SENDGRID_PASSWORD
         }
       });
     }
